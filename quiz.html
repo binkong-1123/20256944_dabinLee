@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+
+
+<head>
+<meta charset="UTF-8">
+<title>디지털 용어 퀴즈</title>
+
+<link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+
+@font-face {
+    font-family: 'Paperozi';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-5Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-display: swap;
+}
+
+body{
+    font-family:'Paperozi';
+}
+
+body{
+  background:#f8f9fa;
+}
+
+.quiz-container{
+  max-width:800px;
+  margin:50px auto;
+}
+
+.quiz-card{
+  background:white;
+  border-radius:20px;
+  padding:60px;
+  min-height:700px;
+  box-shadow:0 4px 20px rgba(0,0,0,.1);
+  transition:.5s;
+
+  display:flex;
+  flex-direction:column;
+}
+
+.question-number{
+  color:#6c757d;
+  margin-bottom:20px;
+}
+
+.question{
+  font-size:32px;
+  font-weight:bold;
+  text-align:center;
+
+  margin-top:120px;
+  margin-bottom:120px;
+}
+
+.option{
+  width:100%;
+  margin-bottom:20px;
+  padding:25px;
+  font-size:22px;
+  text-align:left;
+  border-radius:15px;
+}
+
+.correct{
+  background:#198754 !important;
+  color:white !important;
+}
+
+.wrong{
+  background:#dc3545 !important;
+  color:white !important;
+}
+
+.slide-out{
+  transform:translateX(120%);
+  opacity:0;
+}
+
+.result{
+  text-align:center;
+  display:none;
+}
+
+.result h2{
+  margin-bottom:20px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="quiz-container">
+
+    <div class="quiz-card" id="quizCard">
+
+      <div class="question-number" id="questionNumber"></div>
+
+      <div class="question" id="question"></div>
+
+      <div id="options"></div>
+
+    </div>
+
+    <div class="result" id="result">
+
+      <h2>🎉 학습 완료!</h2>
+
+      <h4 id="scoreText"></h4>
+
+      <a href="index.html" class="btn btn-primary mt-4">
+        홈으로 돌아가기
+      </a>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+const questions = [
+
+{
+question:"와이파이란 무엇일까요?",
+options:[
+"사진 저장 공간",
+"무선 인터넷 연결 기능",
+"문자 메시지 앱"
+],
+answer:1
+},
+
+{
+question:"QR코드란 무엇일까요?",
+options:[
+"카메라로 스캔하는 코드",
+"전화번호 저장 기능",
+"인터넷 브라우저"
+],
+answer:0
+},
+
+{
+question:"갤러리란 무엇일까요?",
+options:[
+"사진 및 동영상 저장 공간",
+"메신저 앱",
+"인터넷 검색창"
+],
+answer:0
+},
+
+{
+question:"블루투스란 무엇일까요?",
+options:[
+"카메라 기능",
+"무선 기기 연결 기능",
+"전화 걸기 기능"
+],
+answer:1
+},
+
+{
+question:"카카오톡은 무엇일까요?",
+options:[
+"메신저 앱",
+"카메라 앱",
+"계산기 앱"
+],
+answer:0
+},
+
+{
+question:"다운로드란?",
+options:[
+"파일 저장",
+"파일 삭제",
+"전화 걸기"
+],
+answer:0
+},
+
+{
+question:"업로드란?",
+options:[
+"인터넷에 파일 올리기",
+"파일 지우기",
+"앱 설치"
+],
+answer:0
+},
+
+{
+question:"알림이란?",
+options:[
+"앱 안내 메시지",
+"전화번호",
+"인터넷"
+],
+answer:0
+},
+
+{
+question:"설정이란?",
+options:[
+"휴대폰 관리 메뉴",
+"사진첩",
+"메신저"
+],
+answer:0
+},
+
+{
+question:"유튜브란?",
+options:[
+"동영상 플랫폼",
+"전화 앱",
+"메모장"
+],
+answer:0
+}
+
+];
+
+let currentIndex = 0;
+let score = 0;
+let wrongQuestions = [];
+let reviewMode = false;
+
+const questionNumber =
+document.getElementById("questionNumber");
+
+const question =
+document.getElementById("question");
+
+const options =
+document.getElementById("options");
+
+const quizCard =
+document.getElementById("quizCard");
+
+function loadQuestion(){
+
+let currentQuestions =
+reviewMode ? wrongQuestions : questions;
+
+if(currentIndex >= currentQuestions.length){
+
+if(!reviewMode && wrongQuestions.length > 0){
+
+alert("틀린 문제를 다시 풀어볼까요?");
+
+reviewMode = true;
+currentIndex = 0;
+
+loadQuestion();
+return;
+}
+
+finishQuiz();
+return;
+}
+
+const q =
+currentQuestions[currentIndex];
+
+questionNumber.innerHTML =
+(reviewMode ? "복습 문제 " : "문제 ")
++ (currentIndex+1)
++ " / "
++ currentQuestions.length;
+
+question.innerHTML =
+q.question;
+
+options.innerHTML = "";
+
+q.options.forEach((option,index)=>{
+
+const btn =
+document.createElement("button");
+
+btn.className =
+"btn btn-outline-primary option";
+
+btn.innerHTML =
+(option);
+
+btn.onclick =
+()=>checkAnswer(btn,index);
+
+options.appendChild(btn);
+
+});
+
+}
+
+function checkAnswer(button,index){
+
+let currentQuestions =
+reviewMode ? wrongQuestions : questions;
+
+const q =
+currentQuestions[currentIndex];
+
+const buttons =
+document.querySelectorAll(".option");
+
+buttons.forEach(btn=>{
+btn.disabled=true;
+});
+
+if(index === q.answer){
+
+button.classList.add("correct");
+
+if(!reviewMode){
+score++;
+}
+
+}else{
+
+button.classList.add("wrong");
+
+buttons[q.answer]
+.classList.add("correct");
+
+if(!reviewMode){
+wrongQuestions.push(q);
+}
+
+}
+
+setTimeout(()=>{
+
+quizCard.classList.add("slide-out");
+
+setTimeout(()=>{
+
+quizCard.classList.remove("slide-out");
+
+currentIndex++;
+
+loadQuestion();
+
+},400);
+
+},1000);
+
+}
+
+function finishQuiz(){
+
+document.getElementById("quizCard")
+.style.display="none";
+
+document.getElementById("result")
+.style.display="block";
+
+document.getElementById("scoreText")
+.innerHTML =
+"정답 수 : "
++ score
++ " / "
++ questions.length;
+
+}
+
+loadQuestion();
+
+</script>
+
+</body>
+</html>

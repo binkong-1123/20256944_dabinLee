@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+
+<head>
+<meta charset="UTF-8">
+<title>복습 노트</title>
+
+<link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+
+  @font-face {
+    font-family: 'Paperozi';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-5Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-display: swap;
+}
+
+body{
+    font-family:'Paperozi';
+}
+
+table tbody tr.term-highlight td{
+  background-color:#cfe2ff !important;
+  font-weight:bold;
+}
+
+.review-btn{
+  min-width:100px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container mt-4">
+
+  <h1 class="text-center mb-4">복습 노트</h1>
+
+  
+
+  <div class="card p-3 mb-3">
+
+
+<div class="input-group">
+
+  <input
+    type="text"
+    id="searchInput"
+    class="form-control"
+    placeholder="학습 항목 검색"
+    onkeypress="if(event.key==='Enter') searchTerm()">
+
+  <button
+    class="btn btn-primary"
+    onclick="searchTerm()">
+    검색
+  </button>
+
+</div>
+
+
+  </div>
+
+  
+
+  <div class="card p-3">
+
+
+<table class="table table-hover align-middle">
+
+  <thead class="table-light">
+
+    <tr>
+      <th width="10%">완료</th>
+      <th width="60%">학습 항목</th>
+      <th width="20%">복습</th>
+    </tr>
+
+  </thead>
+
+  <tbody>
+
+    <tr>
+      <td>
+        <input type="checkbox"
+        class="form-check-input"
+        style="transform:scale(1.4);">
+      </td>
+
+      <td>전화번호 저장하기</td>
+
+      <td>
+        <a href="phone-save.html"
+        class="btn btn-primary review-btn">
+          복습하기
+        </a>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <input type="checkbox"
+        class="form-check-input"
+        style="transform:scale(1.4);">
+      </td>
+
+      <td>와이파이 연결하기</td>
+
+      <td>
+        <a href="wifi.html"
+        class="btn btn-primary review-btn">
+          복습하기
+        </a>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <input type="checkbox"
+        class="form-check-input"
+        style="transform:scale(1.4);">
+      </td>
+
+      <td>QR코드 사용하기</td>
+
+      <td>
+        <a href="qr.html"
+        class="btn btn-primary review-btn">
+          복습하기
+        </a>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <input type="checkbox"
+        class="form-check-input"
+        style="transform:scale(1.4);">
+      </td>
+
+      <td>사진 보내기</td>
+
+      <td>
+        <a href="photo-send.html"
+        class="btn btn-primary review-btn">
+          복습하기
+        </a>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <input type="checkbox"
+        class="form-check-input"
+        style="transform:scale(1.4);">
+      </td>
+
+      <td>삼성페이 사용하기</td>
+
+      <td>
+        <a href="samsungpay.html"
+        class="btn btn-primary review-btn">
+          복습하기
+        </a>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <input type="checkbox"
+        class="form-check-input"
+        style="transform:scale(1.4);">
+      </td>
+
+      <td>알림 확인하기</td>
+
+      <td>
+        <a href="notification.html"
+        class="btn btn-primary review-btn">
+          복습하기
+        </a>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <input type="checkbox"
+        class="form-check-input"
+        style="transform:scale(1.4);">
+      </td>
+
+      <td>카카오톡 메시지 보내기</td>
+
+      <td>
+        <a href="kakao.html"
+        class="btn btn-primary review-btn">
+          복습하기
+        </a>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <input type="checkbox"
+        class="form-check-input"
+        style="transform:scale(1.4);">
+      </td>
+
+      <td>앱 설치하기</td>
+
+      <td>
+        <a href="app-install.html"
+        class="btn btn-primary review-btn">
+          복습하기
+        </a>
+      </td>
+    </tr>
+
+  </tbody>
+
+</table>
+
+
+  </div>
+
+  
+
+  <div class="text-center mt-5 mb-5">
+
+
+<a href="index.html" class="btn btn-secondary">
+  홈으로 돌아가기
+</a>
+
+
+  </div>
+
+</div>
+
+<script>
+
+function searchTerm(){
+
+  const keyword =
+    document.getElementById("searchInput")
+    .value
+    .trim()
+    .toLowerCase();
+
+  const rows =
+    document.querySelectorAll("tbody tr");
+
+  rows.forEach(row=>{
+    row.classList.remove("term-highlight");
+  });
+
+  if(keyword==="") return;
+
+  for(let row of rows){
+
+    const text =
+      row.children[1]
+      .textContent
+      .trim()
+      .toLowerCase();
+
+    if(text.includes(keyword)){
+
+      row.classList.add("term-highlight");
+
+      row.scrollIntoView({
+        behavior:"smooth",
+        block:"center"
+      });
+
+      break;
+    }
+
+  }
+
+}
+
+</script>
+
+</body>
+
+</html>

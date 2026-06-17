@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <title>디지털 용어 사전</title>
+
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+  table tbody tr.term-highlight td{
+    background-color:#cfe2ff !important;
+    font-weight:bold;
+  }
+
+  @font-face {
+    font-family: 'Paperozi';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-5Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-display: swap;
+}
+
+body{
+    font-family:'Paperozi';
+}
+  </style>
+
+</head>
+
+<body>
+
+<div class="container-fluid mt-4">
+
+  <h1 class="text-center mb-4">디지털 용어 사전</h1>
+
+  <div class="row">
+
+    
+    <div class="col-md-3">
+
+      <div class="card p-3 mb-4">
+
+        <h5>키워드 검색</h5>
+
+        <input
+          type="text"
+          id="searchInput"
+          class="form-control"
+          placeholder="용어 검색"
+          onkeypress="if(event.key==='Enter') searchTerm()">
+
+        <button
+          class="btn btn-primary mt-2"
+          onclick="searchTerm()">
+          검색
+        </button>
+
+      </div>
+
+    </div>
+
+    
+    <div class="col-md-9">
+
+      <div class="card p-3">
+
+        <table class="table table-hover align-middle">
+
+          <thead class="table-light">
+            <tr>
+              <th width="10%">암기</th>
+              <th width="25%">용어</th>
+              <th>설명</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <tr>
+              <td><input type="checkbox" class="form-check-input"></td>
+              <td>와이파이</td>
+              <td>무선 인터넷에 연결하는 기능</td>
+            </tr>
+
+            <tr>
+              <td><input type="checkbox" class="form-check-input"></td>
+              <td>QR코드</td>
+              <td>카메라로 스캔하여 정보를 확인하는 코드</td>
+            </tr>
+
+            <tr>
+              <td><input type="checkbox" class="form-check-input"></td>
+              <td>앱</td>
+              <td>스마트폰에서 사용하는 응용 프로그램</td>
+            </tr>
+
+            <tr>
+              <td><input type="checkbox" class="form-check-input"></td>
+              <td>카카오톡</td>
+              <td>메시지와 사진을 주고받는 메신저 앱</td>
+            </tr>
+
+            <tr>
+              <td><input type="checkbox" class="form-check-input"></td>
+              <td>갤러리</td>
+              <td>사진과 동영상을 저장하는 공간</td>
+            </tr>
+
+            <tr>
+              <td><input type="checkbox" class="form-check-input"></td>
+              <td>블루투스</td>
+              <td>무선으로 기기를 연결하는 기능</td>
+            </tr>
+
+            <tr>
+              <td><input type="checkbox" class="form-check-input"></td>
+              <td>삼성페이</td>
+              <td>휴대폰으로 결제할 수 있는 서비스</td>
+            </tr>
+
+            <tr>
+              <td><input type="checkbox" class="form-check-input"></td>
+              <td>알림</td>
+              <td>앱에서 전달하는 안내 메시지</td>
+            </tr>
+
+            <tr>
+              <td><input type="checkbox" class="form-check-input"></td>
+              <td>문자메시지</td>
+              <td>휴대폰으로 텍스트를 주고받는 기능</td>
+            </tr>
+
+            <tr>
+              <td><input type="checkbox" class="form-check-input"></td>
+              <td>연락처</td>
+              <td>전화번호를 저장하는 기능</td>
+            </tr>
+
+            <tr>
+              <td><input type="checkbox" class="form-check-input"></td>
+              <td>설정</td>
+              <td>휴대폰 기능을 변경하고 관리하는 메뉴</td>
+            </tr>
+
+            <tr>
+              <td><input type="checkbox" class="form-check-input"></td>
+              <td>유튜브</td>
+              <td>동영상을 시청하는 플랫폼</td>
+            </tr>
+
+            <tr>
+              <td><input type="checkbox" class="form-check-input"></td>
+              <td>검색창</td>
+              <td>원하는 정보를 찾기 위해 입력하는 공간</td>
+            </tr>
+
+            <tr>
+              <td><input type="checkbox" class="form-check-input"></td>
+              <td>다운로드</td>
+              <td>인터넷의 파일을 내 기기에 저장하는 기능</td>
+            </tr>
+
+            <tr>
+              <td><input type="checkbox" class="form-check-input"></td>
+              <td>업로드</td>
+              <td>내 기기의 파일을 인터넷에 올리는 기능</td>
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  
+  <div class="text-center mt-5 mb-5">
+
+    <a href="index.html" class="btn btn-secondary">
+      홈으로 돌아가기
+    </a>
+
+  </div>
+
+</div>
+
+<script>
+
+function searchTerm(){
+
+  const keyword =
+    document.getElementById("searchInput")
+    .value
+    .trim()
+    .toLowerCase();
+
+  const rows =
+    document.querySelectorAll("tbody tr");
+
+  
+  rows.forEach(row=>{
+    row.classList.remove("term-highlight");
+  });
+
+  if(keyword === "") return;
+
+  for(let row of rows){
+
+    const text =
+      row.children[1].textContent
+      .trim()
+      .toLowerCase();
+
+    if(text.includes(keyword)){
+
+      row.classList.add("term-highlight");
+
+      row.scrollIntoView({
+        behavior:"smooth",
+        block:"center"
+      });
+
+      break;
+    }
+
+  }
+
+}
+
+</script>
+
+</body>
+</html>

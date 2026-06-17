@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wi‑Fi 미션 One UI 스타일</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+font-family:Arial,sans-serif;
+background:#eef2f7;
+}
+
+.mission{
+text-align:center;
+margin-bottom:15px;
+}
+
+.phone{
+width:390px;
+height:850px;
+padding:8px;
+background:#222;
+border-radius:42px;
+box-shadow:0 25px 60px rgba(0,0,0,.3);
+}
+
+.screen{
+position:relative;
+width:100%;
+height:100%;
+border-radius:34px;
+overflow:hidden;
+background-image:url("wallpaper.jpg");
+background-size:cover;
+background-position:center;
+background-color:#6d28d9;
+}
+
+.camera{
+position:absolute;
+top:8px;
+left:50%;
+transform:translateX(-50%);
+width:110px;
+height:24px;
+background:#000;
+border-radius:20px;
+z-index:50;
+}
+
+.status{
+padding:40px 20px 10px;
+color:white;
+font-weight:bold;
+}
+
+.apps{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:30px;
+padding:80px 30px;
+text-align:center;
+color:white;
+}
+
+.app{
+cursor:pointer;
+}
+
+.app-icon{
+  width:74px;
+  height:74px;
+  margin:auto;
+  border-radius:18px;
+  overflow:hidden;
+  background:transparent;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.app-icon img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+.bottom-nav{
+position:absolute;
+bottom:20px;
+left:0;
+right:0;
+display:flex;
+justify-content:center;
+gap:35px;
+font-size:28px;
+color:white;
+}
+
+.swipe-guide{
+text-align:center;
+color:white;
+margin-top:150px;
+font-size:18px;
+}
+
+.quick-panel{
+  position:absolute;
+  top:-100%;
+  left:0;
+  width:100%;
+  height:70%;
+  background:rgba(243,244,246,0.8);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border-radius:0 0 32px 32px;
+  transition:.45s;
+  z-index:30;
+  padding:25px;
+}
+
+.quick-panel.show{
+  top:0;
+}
+
+.handle{
+  width:70px;
+  height:6px;
+  background:#bbb;
+  margin:0 auto 20px;
+  border-radius:20px;
+}
+
+.panel-time{
+  font-size:42px;
+  font-weight:bold;
+}
+
+.panel-date{
+  color:#666;
+  margin-bottom:25px;
+}
+
+.quick-grid{
+  display:grid;
+  grid-template-columns:repeat(4,74px);
+  justify-content:center;
+  gap:18px;
+}
+
+.quick-item{
+text-align:center;
+cursor:pointer;
+}
+
+.quick-btn{
+width:74px;
+height:74px;
+margin:auto;
+border-radius:50%;
+background:#e5e7eb;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:30px;
+}
+
+.quick-btn {
+  width: 74px;
+  height: 74px;
+  margin: auto;
+  border-radius: 50%;
+  background: #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; /* 이미지가 밖으로 안 튀어나오게 */
+}
+
+.quick-btn img {
+  width: 60%;
+  height: 60%;
+  object-fit: contain; /* 비율 유지하면서 원 안에 맞춤 */
+  display: block;
+}
+
+.quick-item {
+  text-align: center;
+  cursor: pointer;
+}
+
+.quick-label {
+  margin-top: 8px;
+  font-size: 13px;
+}
+
+.quick-label{
+margin-top:8px;
+font-size:13px;
+}
+
+.brightness{
+margin-top:25px;
+height:18px;
+background:#d1d5db;
+border-radius:20px;
+overflow:hidden;
+}
+
+.brightness-fill{
+width:45%;
+height:100%;
+background:white;
+}
+
+.empty{
+margin-top:120px;
+text-align:center;
+color:#666;
+font-size:22px;
+}
+
+.page{
+display:none;
+position:absolute;
+inset:0;
+background:white;
+padding:80px 20px;
+z-index:40;
+}
+
+.network{
+padding:18px;
+border:1px solid #ddd;
+border-radius:14px;
+margin-bottom:10px;
+cursor:pointer;
+}
+
+input{
+width:100%;
+padding:15px;
+margin:15px 0;
+font-size:16px;
+}
+
+button{
+padding:12px 20px;
+border:none;
+background:#0d6efd;
+color:white;
+border-radius:10px;
+cursor:pointer;
+}
+
+.success{
+text-align:center;
+padding-top:180px;
+}
+</style>
+</head>
+<body>
+
+<div class="mission">
+<h2>Wi‑Fi 연결 미션</h2>
+<p>우리집_WiFi에 연결해보세요.</p>
+</div>
+
+<div class="phone">
+<div class="screen" id="screen">
+
+<div class="camera"></div>
+
+<div class="status">8:18</div>
+
+<div id="home">
+
+<div class="apps">
+
+<div class="app" onclick="wrongApp()">
+  <div class="app-icon">
+    <img src="katalk.png" alt="카카오톡">
+  </div>
+  <div>카카오톡</div>
+</div>
+
+<div class="app" onclick="wrongApp()">
+  <div class="app-icon">
+    <img src="youtube.png" alt="유튜브">
+  </div>
+  <div>유튜브</div>
+</div>
+
+<div class="app" onclick="wrongApp()">
+  <div class="app-icon">
+    <img src="gal.png" alt="갤러리">
+  </div>
+  <div>갤러리</div>
+</div>
+
+</div>
+
+<div class="swipe-guide">
+⬇ 상단에서 아래로 밀어내려보세요 ⬇
+</div>
+
+<div class="bottom-nav">
+<span>≡</span>
+<span>○</span>
+<span>◁</span>
+</div>
+
+</div>
+
+<div class="quick-panel" id="panel">
+
+<div class="handle"></div>
+
+<div class="panel-time">11:23</div>
+<div class="panel-date">6월 18일 목요일</div>
+
+<div class="quick-grid">
+
+<div class="quick-item" onclick="openWifi()">
+  <div class="quick-btn active">
+    <img src="wifi.png" alt="Wi-Fi">
+  </div>
+  <div class="quick-label">Wi-Fi</div>
+</div>
+
+<div class="quick-item" onclick="wrongChoice()">
+  <div class="quick-btn">
+    <img src="blt.png" alt="Bluetooth">
+  </div>
+  <div class="quick-label">Bluetooth</div>
+</div>
+
+<div class="quick-item" onclick="wrongChoice()">
+  <div class="quick-btn">
+    <img src="sound.png" alt="무음">
+  </div>
+  <div class="quick-label">무음</div>
+</div>
+
+<div class="quick-item" onclick="wrongChoice()">
+  <div class="quick-btn">
+    <img src="airplane.png" alt="비행기 모드">
+  </div>
+  <div class="quick-label">비행기모드</div>
+</div>
+
+</div>
+
+<div class="brightness">
+<div class="brightness-fill"></div>
+</div>
+
+<div class="empty">알림 없음</div>
+
+</div>
+
+<div class="page" id="wifiPage">
+<h2>Wi‑Fi 네트워크</h2><br>
+
+<div class="network" onclick="wrongNetwork()">Cafe_Free</div>
+<div class="network" onclick="selectHome()">우리집_WiFi</div>
+<div class="network" onclick="wrongNetwork()">Apartment_5G</div>
+</div>
+
+<div class="page" id="passwordPage">
+<h2>우리집_WiFi</h2>
+<p>암호를 입력하세요</p>
+
+<input id="pw" type="password" placeholder="8자리 비밀번호를 입력하세요">
+
+<button onclick="connectWifi()">연결</button>
+</div>
+
+<div class="page" id="successPage">
+<div class="success">
+<h1>🎉</h1>
+<h2>연결 완료!</h2>
+<p>우리집_WiFi에 연결되었습니다.</p><br>
+<button onclick="location.reload()">다시하기</button>
+</div>
+</div>
+
+</div>
+</div>
+
+<script>
+let startY=0;
+
+const screen=document.getElementById('screen');
+
+screen.addEventListener('mousedown',e=>{
+if(e.clientY<250){
+startY=e.clientY;
+}
+});
+
+screen.addEventListener('mouseup',e=>{
+if(e.clientY-startY>80){
+document.getElementById('panel').classList.add('show');
+}
+});
+
+function wrongApp(){
+alert("현재 미션과 관련 없는 앱입니다.");
+}
+
+function wrongChoice(){
+alert("Wi‑Fi를 선택해보세요.");
+}
+
+function openWifi(){
+document.getElementById('wifiPage').style.display='block';
+}
+
+function wrongNetwork(){
+alert("우리집_WiFi를 선택해보세요.");
+}
+
+function selectHome(){
+document.getElementById('wifiPage').style.display='none';
+document.getElementById('passwordPage').style.display='block';
+}
+
+function connectWifi(){
+const pw=document.getElementById('pw').value;
+
+if(pw==="12345678"){
+document.getElementById('passwordPage').style.display='none';
+document.getElementById('successPage').style.display='block';
+}else{
+alert("비밀번호가 틀렸습니다. 다시 시도해보세요!");
+}
+}
+</script>
+
+</body>
+</html>
