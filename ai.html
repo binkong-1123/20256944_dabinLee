@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>AI 질문 탭</title>
+
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<style>
+@font-face {
+    font-family: 'Paperozi';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-5Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-display: swap;
+}
+
+body{
+    font-family:'Paperozi';
+}
+</style>
+
+<body>
+
+<div class="container mt-5">
+
+  <h1 class="text-center mb-4">AI 질문 탭</h1>
+
+  <div class="card p-4">
+
+    
+    <div id="welcome-image" class="text-center mb-4">
+
+      <img
+        id="aiImage"
+        src="aibaby.png"
+        alt="AI 캐릭터"
+        style="
+          width:500px;
+          max-width:200%;
+          transition:all 0.5s ease;
+        ">
+
+    </div>
+
+    
+    <div
+      id="chat-area"
+      class="mb-4"
+      style="
+        height:400px;
+        overflow-y:auto;
+      ">
+    </div>
+
+    
+    <div class="input-group">
+
+      <input
+        type="text"
+        id="userInput"
+        class="form-control"
+        placeholder="궁금한 내용을 입력하세요">
+
+      <button
+        class="btn btn-outline-secondary"
+        onclick="alert('음성 인식 중! 어려운 점을 말씀해주세요.')">
+        🎤
+      </button>
+
+      <button
+        class="btn btn-primary"
+        onclick="sendMessage()">
+        전송
+      </button>
+
+    </div>
+
+  </div>
+
+  
+  <div class="mt-4 text-center">
+
+    <a href="index.html" class="btn btn-secondary">
+      홈으로 돌아가기
+    </a>
+
+  </div>
+
+</div>
+
+<script>
+
+function sendMessage() {
+
+  const input = document.getElementById("userInput");
+  const chatArea = document.getElementById("chat-area");
+  const aiImage = document.getElementById("aiImage");
+
+  if (input.value.trim() === "") return;
+
+  
+  aiImage.style.width = "150px";
+
+  
+  chatArea.innerHTML += `
+    <div class="d-flex justify-content-end mb-3">
+      <div
+        class="card p-3 shadow-sm"
+        style="
+          max-width:70%;
+          background:#f8f9fa;
+        ">
+        ${input.value}
+      </div>
+    </div>
+  `;
+
+  
+  chatArea.scrollTop = chatArea.scrollHeight;
+
+  input.value = "";
+}
+
+
+document.getElementById("userInput")
+  .addEventListener("keypress", function(event) {
+
+    if (event.key === "Enter") {
+      sendMessage();
+    }
+
+});
+
+</script>
+
+</body>
+</html>
